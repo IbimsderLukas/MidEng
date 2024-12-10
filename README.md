@@ -1,7 +1,7 @@
 # Project located in master branch!
 
 
-# Documentation
+# Overview
 
 This exercise is intended to demonstrate the functionality and implementation of Remote Procedure Call (RPC) technology using the Open Source High Performance gRPC Framework **gRPC Frameworks** ([https://grpc.io](https://grpc.io/)). It shows that this framework can be used to develop a middleware system for connecting several services developed with different programming languages.
 
