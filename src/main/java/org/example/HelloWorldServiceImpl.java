@@ -2,6 +2,7 @@ package org.example;
 
 
 import io.grpc.stub.StreamObserver;
+import model.VoteData;
 
 public class HelloWorldServiceImpl extends HelloWorldServiceGrpc.HelloWorldServiceImplBase {
 
@@ -10,11 +11,15 @@ public class HelloWorldServiceImpl extends HelloWorldServiceGrpc.HelloWorldServi
 
         System.out.println("Handling hello endpoint: " + request.toString());
 
-        String text = "Hello World, " + request.getFirstname() + " " + request.getLastname();
+        String text = getVoteDataAsJSON("1234");
         Hello.HelloResponse response = Hello.HelloResponse.newBuilder().setText(text).build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
 
+    }
+    public String getVoteDataAsJSON( String regionID) {
+        VoteData data = VoteService.getVoteData(regionID);
+        return data.toJSON();
     }
 }
