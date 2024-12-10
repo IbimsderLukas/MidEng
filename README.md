@@ -184,3 +184,6 @@ public String getVoteDataAsJSON( String regionID) {
 ```
 
 
+# GKv
+
+Made a new Server Class and a new proto file and a new Client and a new Service, which follow the same exact way then explained above,
