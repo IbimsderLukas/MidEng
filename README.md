@@ -87,6 +87,28 @@ It makes sense to improve the error handling in the server for such scenarios. g
 
 https://intuting.medium.com/implement-grpc-service-using-java-gradle-7a54258b60b8
 
+# Program
 
+#### Client class:
+```java
+ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051)
+        .usePlaintext()
+        .build();
+
+```
+
+- **`ManagedChannel`:** Represents the communication channel between the client and the server.
+- **`ManagedChannelBuilder.forAddress(‘localhost’, 50051)`:** Builds a channel that connects to a server on `localhost` (the local host) and port `50051`.
+- **`.usePlaintext()`:** Specifies that the channel does not use encryption (TLS). This is often common in test or development environments.
+- **`.build()`:** Builds the channel.
+
+  ```java
+HelloWorldServiceGrpc.HelloWorldServiceBlockingStub stub = HelloWorldServiceGrpc.newBlockingStub(channel);
+
+```
+
+- **`HelloWorldServiceGrpc.HelloWorldServiceBlockingStub`:** A stub is a client-side proxy object that forwards method calls to the server.
+  - A **blocking stub** is used here, i.e. the method calls block the calling thread until the server responds.
+- **`.newBlockingStub(channel)`:** Creates a stub that is connected to the previously created channel.
 
 
