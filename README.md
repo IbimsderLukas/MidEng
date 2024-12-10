@@ -102,9 +102,77 @@ ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051)
 - **`.usePlaintext()`:** Specifies that the channel does not use encryption (TLS). This is often common in test or development environments.
 - **`.build()`:** Builds the channel.
 
-  ```java
+```java
 HelloWorldServiceGrpc.HelloWorldServiceBlockingStub stub = HelloWorldServiceGrpc.newBlockingStub(channel);
 ```
+
+- HelloWorldServiceGrpc.HelloWorldServiceBlockingStub`:** A stub is a client-side proxy object that forwards method calls to the server.
+  - A **blocking stub** is used here, i.e. the method calls block the calling thread until the server responds.
+- **`.newBlockingStub(channel)`:** Creates a stub that is connected to the previously created channel.
+
+ ```java
+    Hello.HelloResponse helloResponse = stub.hello(Hello.HelloRequest.newBuilder()
+        .setFirstname("Max")
+        .setLastname("Mustermann")
+        .build());
+ ```
+- **`Hello.HelloRequest.newBuilder()`:** Creates a new `HelloRequest` (based on the protobuf definition).
+  - **`.setFirstname(‘Max’)`:** Sets the first name in the request.
+  - **`.setLastname(‘Mustermann’)`:** Sets the last name in the request.
+  - **`.build()`:** Completes the request object.
+- **`stub.hello(...)`:** Executes the `hello` method of the gRPC service on the server. The request is sent to the server and the response (`HelloResponse`) is returned.
+- HelloResponse helloResponse`:** Saves the response from the server.
+
+  #### Server class:
+  ```java
+    public void start() throws IOException {
+        server = ServerBuilder.forPort(PORT)
+            .addService(new HelloWorldServiceImpl())
+            .build()
+            .start();
+} ```
+
+- **`server = ServerBuilder.forPort(PORT)`:** Creates a server that listens on the specified port (`50051`).
+- **`.addService(new HelloWorldServiceImpl())`:** Registers the gRPC service that is to process requests.
+  - **`HelloWorldServiceImpl`**: An implementation of the gRPC service (based on the protobuf definition). This class processes the incoming requests.
+- **`.build()`**: Builds the server with the specified settings.
+- **`.start()`**: Starts the server and makes it ready to receive requests.
+- **`throws IOException`:** If an error occurs when starting the server (e.g. port already occupied).
+
+  ```java
+    public void blockUntilShutdown() throws InterruptedException {
+        if (server == null) {
+            return;
+        }
+        try {
+            server.awaitTermination();
+        } catch (InterruptedException e) {
+            System.err.println("Server interrupted: " + e.getMessage());
+        }
+}
+    ```
+- **`server.awaitTermination()`:** Wartet darauf, dass der Server beendet wird.
+  - Diese Methode blockiert, bis der Server entweder durch einen Systembefehl oder durch eine Ausnahme gestoppt wird.
+- **Abbruchbehandlung (`catch`-Block):** Gibt eine Fehlermeldung aus, falls der Server durch eine Unterbrechung beendet wird.
+
+#### Service Class
+```java
+@Override
+public void hello(Hello.HelloRequest request, StreamObserver<Hello.HelloResponse> responseObserver) {
+
+```
+- **`@Override`:** Indicates that the method from the base class will be overridden.
+  
+- **`hello(...)`:** The implementation of the `hello` method as defined in the protobuf definition in the portofile
+  
+  `rpc hello(HelloRequest) returns (HelloResponse) {}`
+  
+- **Parameter:**
+  
+  - HelloRequest request`:** The request object that is sent by the client. It contains fields such as `firstname` and `lastname`.
+  - **`StreamObserver<Hello.HelloResponse> responseObserver`:** An observer with which the server sends the response back to the client.
+
+
 
 
 
