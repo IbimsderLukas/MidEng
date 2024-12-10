@@ -172,8 +172,15 @@ public void hello(Hello.HelloRequest request, StreamObserver<Hello.HelloResponse
   - HelloRequest request`:** The request object that is sent by the client. It contains fields such as `firstname` and `lastname`.
   - **`StreamObserver<Hello.HelloResponse> responseObserver`:** An observer with which the server sends the response back to the client.
 
+# Vote Data
 
+added VoteData Class with VoteService Class and this methode to return the String
 
-
+```java
+public String getVoteDataAsJSON( String regionID) {
+        VoteData data = VoteService.getVoteData(regionID);
+        return data.toJSON();
+    }
+```
 
 
