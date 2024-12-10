@@ -1,4 +1,4 @@
-# Other Branch Contains the project!!!
+# Project located in master branch!
 
 
 # Beschreibung
