@@ -52,7 +52,41 @@ This sets the location of the Libery that creates the proto file. Normally this 
 
 An unexpected error occurred after executing from the server and then from the client
 
-![](C:\Users\lukas.dumbo\AppData\Roaming\marktext\images\2024-12-10-15-26-08-image.png)
+![image](https://github.com/user-attachments/assets/f7611fe5-83e8-4508-8d2f-90260a21aaf5)
+
+This is caused by a network crash of the client. One possible reason would be because the client is not shut down properly.
+
+Solution approach:
+
+
+```java
+channel.shutdown()
+-----------------
+channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+```
+
+In the client, `channel.shutdown()` is called to close the gRPC channel. However, it is recommended to use `channel.shutdown().awaitTermination(5, TimeUnit.SECONDS)` instead, so that the channel is shut down correctly and all resources are released properly.
+
+Another prevention measure is a try-catch loop in the server
+
+```java
+server.awaitTermination();
+----------------------
+
+try {
+    server.awaitTermination();
+} catch (InterruptedException e) {
+    System.err.println("Server interrupted: " + e.getMessage());
+}
+
+```
+
+It makes sense to improve the error handling in the server for such scenarios. gRPC provides standard logs, but additional specific exception handling mechanisms could help to minimise the error.
+
+# Sources
+
+https://intuting.medium.com/implement-grpc-service-using-java-gradle-7a54258b60b8
+
 
 
 
