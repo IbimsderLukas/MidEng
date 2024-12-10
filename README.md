@@ -104,11 +104,8 @@ ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051)
 
   ```java
 HelloWorldServiceGrpc.HelloWorldServiceBlockingStub stub = HelloWorldServiceGrpc.newBlockingStub(channel);
-
 ```
 
-- **`HelloWorldServiceGrpc.HelloWorldServiceBlockingStub`:** A stub is a client-side proxy object that forwards method calls to the server.
-  - A **blocking stub** is used here, i.e. the method calls block the calling thread until the server responds.
-- **`.newBlockingStub(channel)`:** Creates a stub that is connected to the previously created channel.
+
 
 
