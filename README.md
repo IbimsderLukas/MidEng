@@ -46,6 +46,13 @@ I followed the tutorial until I encountered the following error: The java class 
 ```java
 option java_package = "org.example"; 
 ```
+This sets the location of the Libery that creates the proto file. Normally this is used to make the programme clearer so that the Libery does not end up in a strange place. In this case it is used to have a safe location for the classes to find it.
+
+### Further problem
+
+An unexpected error occurred after executing from the server and then from the client
+
+![](C:\Users\lukas.dumbo\AppData\Roaming\marktext\images\2024-12-10-15-26-08-image.png)
 
 
 
